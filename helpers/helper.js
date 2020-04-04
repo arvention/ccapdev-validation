@@ -16,8 +16,8 @@ const validation = {
 
         /*
             object `validation` is an array of validation middlewares.
-            the first parameter in method check is the field to check
-            the second parameter in method check is the error message
+            the first parameter in method check() is the field to check
+            the second parameter in method check() is the error message
             to be displayed when the value to the parameter fails
             the validation
         */
