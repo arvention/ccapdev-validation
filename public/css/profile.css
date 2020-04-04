@@ -1,0 +1,14 @@
+h1#name {
+    font-family: Rubik;
+    color: black;
+    font-weight: 900;
+    margin: 40px;
+    font-size: 80px;
+}
+
+h2#idNum {
+    font-family: Rubik;
+    margin: 20px;
+    font-size: 40px;
+}
+

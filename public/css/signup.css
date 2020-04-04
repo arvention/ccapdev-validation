@@ -1,0 +1,47 @@
+form {
+    width: 50%;
+}
+
+input {
+    font-family: Roboto;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+}
+
+.field, #submit {
+    width: 100%;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+
+.field {
+    padding-left: 8px;
+    padding-right: 8px;
+    border-style: none;
+    background-color: #E3E3E3;
+}
+
+#submit {
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+#submit:disabled {
+    cursor: not-allowed;
+    color: #A8A8A8;
+    background-color: #E3E3E3;
+    border: 4px solid #E3E3E3;
+}
+
+.error {
+    height: 12px;
+    font-size: 12px;
+    text-align: left;
+}
+
+.error:empty {
+    height: 12px;
+    text-align: left;
+}
