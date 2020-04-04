@@ -9,7 +9,7 @@ const controller = require('../controllers/controller.js');
 const signupController = require('../controllers/signupController.js');
 
 // import module `successController` from `../controllers/successController.js`
-const successController = require('../controllers/successController.js')
+const successController = require('../controllers/successController.js');
 
 // import module `profileController` from `../controllers/profileController.js`
 const profileController = require('../controllers/profileController.js');
