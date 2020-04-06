@@ -37,3 +37,32 @@ http://localhost:9090/
 
 Your web browser should display the screen below:
 ![alt text](index.png "Index Page")
+
+7. Go to the sign-up page either using the menu item or the button.
+
+The picture below shows a blank sign-up form.
+![alt text](signup.png "Sign-up Page")
+
+Review the file [`views/signup.hbs`](views/signup.hbs), focus on the `<form>` element, and take note of its elements and their attributes. Shown below is the `<form>` as excerpted from the file:
+
+```
+<form id="signup" method="post">
+    <input type="text" name="fName" id="fName" class="field" placeholder="First Name" required> <br>
+    <p id="fNameError" class="error">{{fNameError}}</p>
+    <input type="text" name="lName" id="lName" class="field" placeholder="Last Name" required> <br>
+    <p id="lNameError" class="error">{{lNameError}}</p>
+    <input type="number" name="idNum" id="idNum" class="field" placeholder="Id Number" required> <br>
+    <p id="idNumError" class="error">{{idNumError}}</p>
+    <input type="password" name="pw" id="pw" class="field" placeholder="Password" required> <br>
+    <p id="pwError" class="error">{{pwError}}</p>
+    <input type="submit" id="submit" value="SUBMIT" disabled>
+ </form>
+```
+
+We'll first discuss the client-side validation. For the client-side validation, we will use [validator.js](https://github.com/validatorjs/validator.js). We will use this to validate and sanitize the user input in the client-side. Client-side validation means that we will not send any HTTP request to the server to validate the values entered by the user.
+
+For the sign-up sheet in [`views/signup.hbs`](views/signup.hbs), we will:
+- Check if the value entered by the user for the field `fName` is not an empty string.
+- Check if the value entered by the user for the field `lName` is not an empty string.
+- Check if the value entered by the user for the field `idNum` contains EXACTLY 8 digits.
+- Check if the value entered by the user for the field `pw` contains AT LEAST 8 characters.
