@@ -216,4 +216,7 @@ $('#pw').keyup(function () {
 
 To demonstrate the use of server-side validation, you must first disable JavaScript in your browser. Disabling the JavaScript in the browser means that our client-side script will not execute. If you are using Google Chrome, you may disable JavaScript through Settings > Privacy and security > Site Settings > JavaScript.
 
-After disabling JavaScript in your code, go to [`views/signup.hbs`](views/signup.hbs) and remove the `disabled` attribute in the `submit` button. Now, try entering invalid values to the sign-up form - empty value for `fName`, empty value for `lName`, value which contains less than or more than 8 digits for `idNum`, or value which contains less than 8 characters for `pw`.
+After disabling JavaScript in your code, go to [`views/signup.hbs`](views/signup.hbs) and remove the `disabled` attribute in the `submit` button. Now, try entering invalid values to the sign-up form - value which contains less than or more than 8 digits for `idNum` or value which contains less than 8 characters for `pw`. Notice that no error message is displayed even if we have entered invalid values. Try to submit the form. The web application should redirect you to the sign-up form with corresponding error messages for the `<input>` fields `idNum` and `pw`.
+
+The picture below shows the error message displayed when the user enters invalid values for the `<input>` fields `idNum` and `pw`.
+![alt text](signup-server-validation.png "Sign-up Page with Server-Side Validation")
