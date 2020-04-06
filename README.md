@@ -239,7 +239,7 @@ signupValidation: function () {
 }
 ```
 
-The check() function is defined in [express-validator](https://express-validator.github.io/docs/). The first parameter of the function `check()` is the field to check, while its second parameter is the error message returned if the validation results to an error - i.e., the value entered by the user for the parameter does not satisfy the validation rules set for that `<input>` field.
+The `check()` function is defined in [express-validator](https://express-validator.github.io/docs/). The first parameter of the function `check()` is the field to check, while its second parameter is the error message returned if the validation results to an error - i.e., the value entered by the user for the parameter does not satisfy the validation rules set for that `<input>` field.
 
 The function `sigupValidation()` is called to return an array of validation middlewares which is executed when the client sends an HTTP POST request to the path `/signup`, as defined in [`routes/routes.js`](routes/routes.js). Shown below is the code as excerpted from the file:
 
