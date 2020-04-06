@@ -211,3 +211,9 @@ $('#pw').keyup(function () {
     validateField($('#pw'), 'Password', $('#pwError'));
 });
 ```
+
+8. Now, let's discuss server-side validation. We implement the same form validation in the server-side. This is useful for instances where the client's machine disabled the execution of JavaScript. In this case, the values entered by the user will be checked after the user has submitted the values in the form to the server.
+
+To demonstrate the use of server-side validation, you must first disable JavaScript in your browser. Disabling the JavaScript in the browser means that our client-side script will not execute. If you are using Google Chrome, you may disable JavaScript through Settings > Privacy and security > Site Settings > JavaScript.
+
+After disabling JavaScript in your code, go to [`views/signup.hbs`](views/signup.hbs) and remove the `disabled` attribute in the `submit` button. Now, try entering invalid values to the sign-up form - empty value for `fName`, empty value for `lName`, value which contains less than or more than 8 digits for `idNum`, or value which contains less than 8 characters for `pw`.
