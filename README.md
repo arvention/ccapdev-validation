@@ -247,7 +247,7 @@ The function `sigupValidation()` is called to return an array of validation midd
 app.post('/signup', validation.signupValidation(), signupController.postSignUp);
 ```
 
-The array of middleware functions in the function `signupValidation()` will be executed before the callback function `postSignUp()`. The callback function `postSignUp()`, defined in [`controllers/signupController.js`](controllers/signupController.js) then checks for errors from the middleware validation functions.
+The array of middleware functions in the function `signupValidation()` will be executed before the callback function `postSignUp()`. The callback function `postSignUp()`, defined in [`controllers/signupController.js`](controllers/signupController.js) then checks for errors from the middleware validation functions. Shown below is the code as excerpted from the file:
 
 ```
 postSignUp: function (req, res) {
@@ -285,3 +285,5 @@ postSignUp: function (req, res) {
     }
 }
 ```
+
+9. Read the rest of the documentation in the `README.md` files in each folder and in the in-line comments in each file :sunglasses:
