@@ -49,12 +49,16 @@ Review the file [`views/signup.hbs`](views/signup.hbs), focus on the `<form>` el
 <form id="signup" method="post">
     <input type="text" name="fName" id="fName" class="field" placeholder="First Name" required> <br>
     <p id="fNameError" class="error">{{fNameError}}</p>
+
     <input type="text" name="lName" id="lName" class="field" placeholder="Last Name" required> <br>
     <p id="lNameError" class="error">{{lNameError}}</p>
+
     <input type="number" name="idNum" id="idNum" class="field" placeholder="Id Number" required> <br>
     <p id="idNumError" class="error">{{idNumError}}</p>
+
     <input type="password" name="pw" id="pw" class="field" placeholder="Password" required> <br>
     <p id="pwError" class="error">{{pwError}}</p>
+
     <input type="submit" id="submit" value="SUBMIT" disabled>
  </form>
 ```
