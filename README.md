@@ -66,21 +66,21 @@ Review the file [`views/signup.hbs`](views/signup.hbs), focus on the `<form>` el
 We'll first discuss the client-side validation. For the client-side validation, we will use [validator.js](https://github.com/validatorjs/validator.js). We will use this to validate and sanitize the user input in the client-side. Client-side validation means that we will not send any HTTP request to the server to validate the values entered by the user.
 
 For the sign-up sheet in [`views/signup.hbs`](views/signup.hbs), we will:
-- Check if the value entered by the user for the field `fName` is not an empty string.
-- Check if the value entered by the user for the field `lName` is not an empty string.
-- Check if the value entered by the user for the field `idNum` contains EXACTLY 8 digits.
-- Check if the value entered by the user for the field `pw` contains AT LEAST 8 characters.
+- Check if the value entered by the user for the `<input>` field `fName` is not an empty string.
+- Check if the value entered by the user for the `<input>` field `lName` is not an empty string.
+- Check if the value entered by the user for the `<input>` field `idNum` contains EXACTLY 8 digits.
+- Check if the value entered by the user for the `<input>` field `pw` contains AT LEAST 8 characters.
 
-Make sure that JavaScript is allowed in your web browser. Try typing some values in each field to check if the client side validation works. For the field `fName`, try entering a blank space, or try entering a character and deleting it. A message should display below the field which says `First name should not be empty`.
+Make sure that JavaScript is allowed in your web browser. Try typing some values in each `<input>` field to check if the client side validation works. For the `<input>` field `fName`, try entering a blank space, or try entering a character and deleting it. A message should display below the `<input>` field which says `First name should not be empty`.
 
-The picture below shows the error message displayed when the user enters an empty string for the field `fName`.
+The picture below shows the error message displayed when the user enters an empty string for the `<input>` field `fName`.
 ![alt text](signup-client-validation.png "Sign-up Page with Client-Side Validation")
 
-Try to check the client-side validation of the other fields. For field `idNum`, every time the user enters a digit in the field, the client-side script will check if the user has entered EXACTLY 8 digits. For field `pw`, every time the user enters a character in the field, the client-side script will check if the user has entered AT LEAST 8 characters.
+Try to check the client-side validation of the other `<input>` fields. For `<input>` field `idNum`, every time the user enters a digit in the `<input>` field, the client-side script will check if the user has entered EXACTLY 8 digits. For `<input>` field `pw`, every time the user enters a character in the `<input>` field, the client-side script will check if the user has entered AT LEAST 8 characters.
 
 The client-side script [`public/js/signup.js`](public/js/signup.js) is attached to [`views/signup.hbs`](views/signup.hbs). This script contains lines of code which attaches a `keyup()` event all `<input>` element. We will discuss all the functions in the script.
 
-Function `isFilled()` returns true if all the fields are not empty, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.trim()` removes all leading and trailing blank spaces entered by the user. The function call `validator.isEmpty()` returns true if the string argument is empty, otherwise, returns false. Shown below is the code as excerpted from the file:
+Function `isFilled()` returns true if all the `<input>` fields are not empty, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.trim()` removes all leading and trailing blank spaces entered by the user. The function call `validator.isEmpty()` returns true if the string argument is empty, otherwise, returns false. Shown below is the code as excerpted from the file:
 
 ```
 function isFilled() {
@@ -99,7 +99,7 @@ function isFilled() {
 }
 ```
 
-Function `isValidID()` returns true if the field `idNum` contains EXACTLY 8 digits, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.isLength()` checks if the number of characters in the string is within the defined range. The function call `validator.isLength()` accepts an object with 2 fields, min (defines the minimum number of characters in the string) and max (defines the maximum number of characters in the string).
+Function `isValidID()` returns true if the `<input>` field `idNum` contains EXACTLY 8 digits, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.isLength()` checks if the number of characters in the string is within the defined range. The function call `validator.isLength()` accepts an object with 2 fields, min (defines the minimum number of characters in the string) and max (defines the maximum number of characters in the string).
 
 The function `isValidID()` accepts two parameters - `field` (which is the current `<input>` field calling the function) and `callback` (which is the function called after the execution of `isValidID()`).
 
@@ -136,7 +136,7 @@ function isValidID(field, callback) {
 }
 ```
 
-Function `isValidPassword()` returns true if the field `pw` contains AT LEAST 8 characters, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.isLength()` checks if the number of characters in the string is within the defined range. The function call `validator.isLength()` accepts an object with 2 fields, min (defines the minimum number of characters in the string) and max (defines the maximum number of characters in the string).
+Function `isValidPassword()` returns true if the `<input>` field `pw` contains AT LEAST 8 characters, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.isLength()` checks if the number of characters in the string is within the defined range. The function call `validator.isLength()` accepts an object with 2 fields, min (defines the minimum number of characters in the string) and max (defines the maximum number of characters in the string).
 
 The function `isValidPassword()` accepts the parameter `field`, which is the current `<input>` field calling the function. The function displays appropriate error messages for all scenarios. Shown below is the code as excerpted from the file:
 
@@ -162,7 +162,9 @@ function isValidPassword(field) {
     return validPassword;
 }
 ```
+Function `validateField()` calls all the functions that we have defined before - `isFilled()`, `isValidID()`, and `isValidPassword()`. This function checks toggles the `disabled` property of `submit` button upon checking if (1) all `<input>` fields are not empty, (2) the value entered by the user in `<input>` field `idNum` contains EXACTLY 8 digits, and the value entered by the user in `<input>` field `pw` contains AT LEAST 8 characters. If all functions - `isFilled()`, `isValidID()`, and `isValidPassword()` - return true, then the `submit` button will be enabled. If one of the `<input>` fields failed the validation, then the `submit` button will be disabled.
 
+Function `validateField` accepts three parameters - `field` (which is the current `<input>` field calling the function), `fieldName` (which is the the `placeholder` of the current `<input>` field calling the function), and `error` (which is the corresponding `<p>` element to display the error of the current `<input>` field calling this function). Shown below is the code as excerpted from the file:
 
 ```
 function validateField(field, fieldName, error) {
@@ -190,6 +192,7 @@ function validateField(field, fieldName, error) {
     });
 }
 ```
+This script also contains lines of code which attaches a `keyup()` event to each `<input>` element. The function attached to this event is executed every time the user enters a character in the `<input>` field. Each `<input>` field calls the `validateField()` function. Shown below is the code as excerpted from the file:
 
 ```
 $('#fName').keyup(function () {
