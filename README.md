@@ -66,3 +66,8 @@ For the sign-up sheet in [`views/signup.hbs`](views/signup.hbs), we will:
 - Check if the value entered by the user for the field `lName` is not an empty string.
 - Check if the value entered by the user for the field `idNum` contains EXACTLY 8 digits.
 - Check if the value entered by the user for the field `pw` contains AT LEAST 8 characters.
+
+Make sure that JavaScript is allowed in your web browser. Try typing some values in each field to check if the client side validation works. For the field `fName`, try entering a blank space, or try entering a character and deleting it. A message should display below the field which says `First name should not be empty`.
+
+The picture below shows the error message displayed when the user enters an empty string for the field `fName`.
+![alt text](signup-client-validation.png "Sign-up Page with Client-Side Validation")
