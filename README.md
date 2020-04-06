@@ -136,7 +136,9 @@ function isValidID(field, callback) {
 }
 ```
 
-Function `isValidPassword()` returns true if the field `pw` contains AT LEAST 8 characters, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.isLength()` checks if the number of characters in the string is within the defined range. The function call `validator.isLength()` accepts an object with 2 fields, min (defines the minimum number of characters in the string) and max (defines the maximum number of characters in the string). The function displays appropriate error messages for all scenarios. Shown below is the code as excerpted from the file:
+Function `isValidPassword()` returns true if the field `pw` contains AT LEAST 8 characters, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.isLength()` checks if the number of characters in the string is within the defined range. The function call `validator.isLength()` accepts an object with 2 fields, min (defines the minimum number of characters in the string) and max (defines the maximum number of characters in the string).
+
+The function `isValidPassword()` accepts the parameter `field`, which is the current `<input>` field calling the function. The function displays appropriate error messages for all scenarios. Shown below is the code as excerpted from the file:
 
 ```
 function isValidPassword(field) {
@@ -159,4 +161,50 @@ function isValidPassword(field) {
 
     return validPassword;
 }
+```
+
+
+```
+function validateField(field, fieldName, error) {
+
+    var value = validator.trim(field.val());
+    var empty = validator.isEmpty(value);
+
+    if(empty) {
+        field.prop('value', '');
+        error.text(fieldName + ' should not be empty.');
+    }
+
+    else
+        error.text('');
+
+    var filled = isFilled();
+    var validPassword = isValidPassword(field);
+    isValidID(field, function (validID) {
+
+        if(filled && validPassword && validID)
+            $('#submit').prop('disabled', false);
+
+        else
+            $('#submit').prop('disabled', true);
+    });
+}
+```
+
+```
+$('#fName').keyup(function () {
+    validateField($('#fName'), 'First name', $('#fNameError'));
+});
+
+$('#lName').keyup(function () {
+    validateField($('#lName'), 'Last name', $('#lNameError'));
+});
+
+$('#idNum').keyup(function () {
+    validateField($('#idNum'), 'ID Number', $('#idNumError'));
+});
+
+$('#pw').keyup(function () {
+    validateField($('#pw'), 'Password', $('#pwError'));
+});
 ```
