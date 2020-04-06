@@ -71,3 +71,58 @@ Make sure that JavaScript is allowed in your web browser. Try typing some values
 
 The picture below shows the error message displayed when the user enters an empty string for the field `fName`.
 ![alt text](signup-client-validation.png "Sign-up Page with Client-Side Validation")
+
+Try to check the client-side validation of the other fields. For field `idNum`, every time the user enters a digit in the field, the client-side script will check if the user has entered EXACTLY 8 digits. For field `pw`, every time the user enters a character in the field, the client-side script will check if the user has entered AT LEAST 8 characters.
+
+The client-side script [`public/js/signup.js`](public/js/signup.js) is attached to [`views/signup.hbs`](views/signup.hbs). This script contains lines of code which attaches a `keyup()` event all `<input>` element. We will discuss all the functions in the script.
+
+Function `isFilled()` returns true if all the fields are not empty, otherwise it returns false. This function uses the functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.trim()` removes all leading and trailing blank spaces entered by the user. The function call `validator.isEmpty()` returns true if the string argument is empty, otherwise, returns false. Shown below is the code as excerpted from the file:
+
+```
+function isFilled() {
+
+    var fName = validator.trim($('#fName').val());
+    var lName = validator.trim($('#lName').val());
+    var idNum = validator.trim($('#idNum').val());
+    var pw = validator.trim($('#pw').val());
+
+    var fNameEmpty = validator.isEmpty(fName);
+    var lNameEmpty = validator.isEmpty(lName);
+    var idNumEmpty = validator.isEmpty(idNum);
+    var pwEmpty = validator.isEmpty(pw);
+
+    return !fNameEmpty && !lNameEmpty && !idNumEmpty && !pwEmpty;
+}
+```
+
+```
+function isValidID(field, callback) {
+
+    var idNum = validator.trim($('#idNum').val());
+    var isValidLength = validator.isLength(idNum, {min: 8, max: 8});
+
+    if(isValidLength) {
+        $.get('/getCheckID', {idNum: idNum}, function (result) {
+            if(result.idNum != idNum) {
+                if(field.is($('#idNum')))
+                    $('#idNumError').text('');
+
+                return callback(true);
+
+            }
+
+            else {
+                if(field.is($('#idNum')))
+                    $('#idNumError').text('ID number already registered.');
+                    return callback(false);
+                }
+            });
+        }
+
+    else {
+        if(field.is($('#idNum')))
+            $('#idNumError').text('ID Number should contain 8 digits.');
+            return callback(false);
+    }
+}
+```
