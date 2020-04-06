@@ -76,7 +76,7 @@ Try to check the client-side validation of the other fields. For field `idNum`, 
 
 The client-side script [`public/js/signup.js`](public/js/signup.js) is attached to [`views/signup.hbs`](views/signup.hbs). This script contains lines of code which attaches a `keyup()` event all `<input>` element. We will discuss all the functions in the script.
 
-Function `isFilled()` returns true if all the fields are not empty, otherwise it returns false. This function uses the functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.trim()` removes all leading and trailing blank spaces entered by the user. The function call `validator.isEmpty()` returns true if the string argument is empty, otherwise, returns false. Shown below is the code as excerpted from the file:
+Function `isFilled()` returns true if all the fields are not empty, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.trim()` removes all leading and trailing blank spaces entered by the user. The function call `validator.isEmpty()` returns true if the string argument is empty, otherwise, returns false. Shown below is the code as excerpted from the file:
 
 ```
 function isFilled() {
@@ -95,6 +95,11 @@ function isFilled() {
 }
 ```
 
+Function `isValid()` returns true if the field `idNum` contains EXACTLY 8 digits, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.isLength()` checks if the number of characters in the string is within the defined range. The function call `validator.isLength()` accepts an object with 2 fields, min (defines the minimum number of characters in the string) and max (defines the maximum number of characters in the string).
+
+The function `isValid()` accepts two parameters - `field` (which is the current `<input>` field calling the function) and `callback` (which is the function called after the execution of `isValid()`).
+
+The function `isValid()` is not entirely a client-side validation since it also integrates an AJAX call to check if the ID number entered by the user is unique from the ID numbers already stored in the database. The function displays appropriate error messages for all scenarios. Shown below is the code as excerpted from the file:
 ```
 function isValidID(field, callback) {
 
