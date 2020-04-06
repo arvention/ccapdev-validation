@@ -95,11 +95,11 @@ function isFilled() {
 }
 ```
 
-Function `isValid()` returns true if the field `idNum` contains EXACTLY 8 digits, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.isLength()` checks if the number of characters in the string is within the defined range. The function call `validator.isLength()` accepts an object with 2 fields, min (defines the minimum number of characters in the string) and max (defines the maximum number of characters in the string).
+Function `isValidID()` returns true if the field `idNum` contains EXACTLY 8 digits, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.isLength()` checks if the number of characters in the string is within the defined range. The function call `validator.isLength()` accepts an object with 2 fields, min (defines the minimum number of characters in the string) and max (defines the maximum number of characters in the string).
 
-The function `isValid()` accepts two parameters - `field` (which is the current `<input>` field calling the function) and `callback` (which is the function called after the execution of `isValid()`).
+The function `isValidID()` accepts two parameters - `field` (which is the current `<input>` field calling the function) and `callback` (which is the function called after the execution of `isValidID()`).
 
-The function `isValid()` is not entirely a client-side validation since it also integrates an AJAX call to check if the ID number entered by the user is unique from the ID numbers already stored in the database. The function displays appropriate error messages for all scenarios. Shown below is the code as excerpted from the file:
+The function `isValidID()` is not entirely a client-side validation since it also integrates an AJAX call to check if the ID number entered by the user is unique from the ID numbers already stored in the database. The function displays appropriate error messages for all scenarios. Shown below is the code as excerpted from the file:
 ```
 function isValidID(field, callback) {
 
@@ -129,5 +129,30 @@ function isValidID(field, callback) {
             $('#idNumError').text('ID Number should contain 8 digits.');
             return callback(false);
     }
+}
+```
+
+Function `isValidPassword()` returns true if the field `pw` contains AT LEAST 8 characters, otherwise it returns false. This function uses functions defined in [validator.js](https://github.com/validatorjs/validator.js). The function call `validator.isLength()` checks if the number of characters in the string is within the defined range. The function call `validator.isLength()` accepts an object with 2 fields, min (defines the minimum number of characters in the string) and max (defines the maximum number of characters in the string). The function displays appropriate error messages for all scenarios. Shown below is the code as excerpted from the file:
+
+```
+function isValidPassword(field) {
+
+    var validPassword = false;
+
+    var password = validator.trim($('#pw').val());
+    var isValidLength = validator.isLength(password, {min: 8});
+
+    if(isValidLength) {
+        if(field.is($('#pw')))
+            $('#pwError').text('');
+        validPassword = true;
+    }
+
+    else {
+        if(field.is($('#pw')))
+            $('#pwError').text(`Passwords should contain at least 8 characters.`);
+    }
+
+    return validPassword;
 }
 ```
