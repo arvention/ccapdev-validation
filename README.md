@@ -220,3 +220,68 @@ After disabling JavaScript in your code, go to [`views/signup.hbs`](views/signup
 
 The picture below shows the error message displayed when the user enters invalid values for the `<input>` fields `idNum` and `pw`.
 ![alt text](signup-server-validation.png "Sign-up Page with Server-Side Validation")
+
+The server-side validation is implemented using express middlewares defined in [express-validator](https://express-validator.github.io/docs/). This module wraps functions that are defined in [validator.js](https://github.com/validatorjs/validator.js) to express middlewares to be used in server-side scripting.
+
+We define the function `sigupValidation()` which returns an array of middleware functions in the `validation` object of [`helpers/validation.js`](helpers/validation.js). Shown below is the code as excerpted from the file:
+
+```
+signupValidation: function () {
+
+    var validation = [
+        check('fName', 'First name should not be empty.').notEmpty(),
+        check('lName', 'Last name should not be empty.').notEmpty(),
+        check('idNum', 'ID number should contain 8 digits.').isLength({min: 8, max: 8}),
+        check('pw', 'Passwords should contain at least 8 characters.').isLength({min: 8})
+    ];
+
+    return validation;
+}
+```
+
+The check() function is defined in [express-validator](https://express-validator.github.io/docs/). The first parameter of the function `check()` is the field to check, while its second parameter is the error message returned if the validation results to an error - i.e., the value entered by the user for the parameter does not satisfy the validation rules set for that `<input>` field.
+
+The function `sigupValidation()` is called to return an array of validation middlewares which is executed when the client sends an HTTP POST request to the path `/signup`, as defined in [`routes/routes.js`](routes/routes.js). Shown below is the code as excerpted from the file:
+
+```
+app.post('/signup', validation.signupValidation(), signupController.postSignUp);
+```
+
+The array of middleware functions in the function `signupValidation()` will be executed before the callback function `postSignUp()`. The callback function `postSignUp()`, defined in [`controllers/signupController.js`](controllers/signupController.js) then checks for errors from the middleware validation functions.
+
+```
+postSignUp: function (req, res) {
+
+    var errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        errors = errors.errors;
+
+        var details = {};
+        for(i = 0; i < errors.length; i++)
+            details[errors[i].param + 'Error'] = errors[i].msg;
+
+        res.render('signup', details);
+    }
+
+    else {
+        var fName = req.body.fName;
+        var lName = req.body.lName;
+        var idNum = req.body.idNum;
+        var pw = req.body.pw;
+
+        var user = {
+            fName: fName,
+            lName: lName,
+            idNum: idNum,
+            pw: pw
+        }
+
+        db.insertOne(User, user, function(flag) {
+            if(flag) {
+                res.redirect('/success?fName=' + fName +'&lName=' + lName + '&idNum=' + idNum);
+            }
+        });
+    }
+}
+```
