@@ -34,3 +34,6 @@ Connected to: mongodb://localhost:27017/ccapdev-validation
 ```
 http://localhost:9090/
 ```
+
+Your web browser should display the screen below:
+![alt text](index.png "Index Page")
