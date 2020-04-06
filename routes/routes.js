@@ -14,8 +14,8 @@ const successController = require('../controllers/successController.js');
 // import module `profileController` from `../controllers/profileController.js`
 const profileController = require('../controllers/profileController.js');
 
-// import module `validation` from `../helpers/helper.js`
-const helper = require('../helpers/helper.js');
+// import module `validation` from `../helpers/validation.js`
+const validation = require('../helpers/validation.js');
 
 const app = express();
 
@@ -42,12 +42,12 @@ app.get('/signup', signupController.getSignUp);
 
 /*
     execute the array of middleware functions returned by signupValidation()
-    defined in object `validation` in `../helpers/helper.js`
+    defined in object `validation` in `../helpers/validation.js`
     then execute function postSignUp()
     defined in object `signupController` in `../controllers/signupController.js`
     when a client sends an HTTP POST request for `/signup`
 */
-app.post('/signup', helper.signupValidation(), signupController.postSignUp);
+app.post('/signup', validation.signupValidation(), signupController.postSignUp);
 
 /*
     execute function getCheckID()

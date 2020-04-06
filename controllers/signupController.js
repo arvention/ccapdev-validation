@@ -28,7 +28,7 @@ const signupController = {
 
         prior to the execution of this function, values are validated
         with an array of validation middlewares
-        defined in the object `validation` in `../helpers/helper.js`
+        defined in the object `validation` in `../helpers/validation.js`
     */
     postSignUp: function (req, res) {
 
