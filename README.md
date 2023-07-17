@@ -250,7 +250,7 @@ app.post('/signup', validation.signupValidation(), signupController.postSignUp);
 The array of middleware functions in the function `signupValidation()` will be executed before the callback function `postSignUp()`. The callback function `postSignUp()`, defined in [`controllers/signupController.js`](controllers/signupController.js) then checks for errors from the middleware validation functions. Shown below is the code as excerpted from the file:
 
 ```
-postSignUp: function (req, res) {
+postSignUp: async function (req, res) {
 
     var errors = validationResult(req);
 
@@ -277,11 +277,14 @@ postSignUp: function (req, res) {
             pw: pw
         }
 
-        db.insertOne(User, user, function(flag) {
-            if(flag) {
-                res.redirect('/success?fName=' + fName +'&lName=' + lName + '&idNum=' + idNum);
-            }
-        });
+        var response = await db.insertOne(User, user);
+
+        if(response != null){
+            res.redirect('/success?fName=' + fName +'&lName=' + lName + '&idNum=' + idNum);
+        }
+        else {
+            res.render('error');
+        }
     }
 }
 ```

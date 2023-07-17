@@ -30,7 +30,7 @@ const signupController = {
         with an array of validation middlewares
         defined in the object `validation` in `../helpers/validation.js`
     */
-    postSignUp: function (req, res) {
+    postSignUp: async function (req, res) {
 
         // checks if there are validation errors
         var errors = validationResult(req);
@@ -52,7 +52,7 @@ const signupController = {
             */
             var details = {};
             for(i = 0; i < errors.length; i++)
-                details[errors[i].param + 'Error'] = errors[i].msg;
+                details[errors[i].path + 'Error'] = errors[i].msg;
 
             /*
                 render `../views/signup.hbs`
@@ -86,19 +86,23 @@ const signupController = {
                 defined in the `database` object in `../models/db.js`
                 this function adds a document to collection `users`
             */
-            db.insertOne(User, user, function(flag) {
-                if(flag) {
-                    /*
-                        upon adding a user to the database,
-                        redirects the client to `/success` using HTTP GET,
-                        defined in `../routes/routes.js`
-                        passing values using URL
-                        which calls getSuccess() method
-                        defined in `./successController.js`
-                    */
-                    res.redirect('/success?fName=' + fName +'&lName=' + lName + '&idNum=' + idNum);
-                }
-            });
+            var response = await db.insertOne(User, user);
+
+            /*
+                upon adding a user to the database,
+                redirects the client to `/success` using HTTP GET,
+                defined in `../routes/routes.js`
+                passing values using URL
+                which calls getSuccess() method
+                defined in `./successController.js`
+            */
+
+            if(response != null){
+                res.redirect('/success?fName=' + fName +'&lName=' + lName + '&idNum=' + idNum);
+            }
+            else {
+                res.render('error');
+            }
         }
     },
 
@@ -106,7 +110,7 @@ const signupController = {
         executed when the client sends an HTTP GET request `/getCheckID`
         as defined in `../routes/routes.js`
     */
-    getCheckID: function (req, res) {
+    getCheckID: async function (req, res) {
 
         /*
             when passing values using HTTP GET method
@@ -123,9 +127,8 @@ const signupController = {
             sends an empty string to the user if there are no match
             otherwise, sends an object containing the `idNum`
         */
-        db.findOne(User, {idNum: idNum}, 'idNum', function (result) {
-            res.send(result);
-        });
+        var result = await db.findOne(User, {idNum: idNum}, 'idNum');
+        res.send(result);
     }
 
 }
