@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const User = require('./UserModel.js');
 
 // ccapdev-validation is the name of the database
-const url = 'mongodb+srv://arrenantioquia:pdRR6nU35IzYFblc@cluster0.d1l6be7.mongodb.net/?retryWrites=true&w=majority';
+const url = 'mongodb+srv://arrenantioquia:uihXURUCXbSdg2F2@cluster0.d1l6be7.mongodb.net/?retryWrites=true&w=majority';
 
 // additional connection options
 const options = {
